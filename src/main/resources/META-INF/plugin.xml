@@ -1,0 +1,25 @@
+<idea-plugin>
+    <id>MvnMngPlugin.MvnMngPlugin</id>
+    <name>MvnMngPlugin</name>
+    <vendor email="" url="">IntelliJ</vendor>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
+
+    <actions>
+        <action
+                id="MvnMng"
+                class="MvnMngPlugin"
+                text="Check Maven Manager supporting or not"
+                description="Checking for maven manager">
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+        </action>
+    </actions>
+</idea-plugin>
