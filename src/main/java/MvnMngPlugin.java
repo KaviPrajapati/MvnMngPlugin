@@ -4,6 +4,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.editor.CaretModel;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.editor.event.EditorMouseListener;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -17,20 +18,23 @@ public class MvnMngPlugin extends AnAction {
 
         Editor editor = e.getRequiredData(CommonDataKeys.EDITOR);
         CaretModel caretModel = editor.getCaretModel();
+        System.out.println(caretModel.getCurrentCaret());
         String selectedText = caretModel.getCurrentCaret().getSelectedText().trim()+".plist";
 
-        String path = "C:\\Users\\KAVI\\Desktop\\"+selectedText;
+        String path = "/Users/kavi.prajapati/IntelliJTask/modules/"+selectedText;
 
         File file = new File(path);
         boolean MvnMng = false;
+        boolean fileexist = false;
         if(file.exists())
         {
+            fileexist = true;
             try {
                 Scanner sc = new Scanner(file);
                 while(sc.hasNext())
                 {
                     String inp[] = sc.nextLine().split(" = ");
-                    if(inp[0].trim().equals("IsMvnMngSupported"))
+                    if(inp[0].trim().equals("IsMvnMgrSupported"))
                     {
                         String match = (inp[1].charAt(0)=='"') ? inp[1].substring(1,inp[1].length()-2) : inp[1].substring(0 , inp[1].length()- 1);
                         MvnMng = match.equals("True");
@@ -42,7 +46,7 @@ public class MvnMngPlugin extends AnAction {
                 MvnMng = false;
             }
         }
-        String message = MvnMng ? "MvnMng is supported" : "MvnMng is not supported";
+        String message = !fileexist ? "This is not a dependency" : ( MvnMng ? "MvnMgr is supported" : "MvnMgr is not supported");
         HintManager.getInstance().showInformationHint(editor , message);
     }
 }
